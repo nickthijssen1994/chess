@@ -1,22 +1,23 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-*                              Java Chess                                      *
-*         Copyright (C) 2005  Arvydas Bancewicz and Ihor Lesko                 *
-*                                                                              *
-*    This program is free software; you can redistribute it and/or modify      *
-*    it under the terms of the GNU General Public License as published by      *
-*    the Free Software Foundation; either version 2 of the License, or         *
-*    (at your option) any later version.                                       *
-*                                                                              *
-*    This program  is distributed in the hope that it will be useful,          *
-*    but WITHOUT ANY WARRANTY; without even the implied warranty of            *
-*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
-*    GNU General Public License for more details.                              *
-*                                                                              *
-*    You should have received a copy of the GNU General Public License         *
-*    along with Java Chess; if not, write to the Free Software                 *
-*    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA *
-*                                                                              *                                                       *
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+ *                              Java Chess                                      *
+ *         Copyright (C) 2005  Arvydas Bancewicz and Ihor Lesko                 *
+ *                                                                              *
+ *    This program is free software; you can redistribute it and/or modify      *
+ *    it under the terms of the GNU General Public License as published by      *
+ *    the Free Software Foundation; either version 2 of the License, or         *
+ *    (at your option) any later version.                                       *
+ *                                                                              *
+ *    This program  is distributed in the hope that it will be useful,          *
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of            *
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             *
+ *    GNU General Public License for more details.                              *
+ *                                                                              *
+ *    You should have received a copy of the GNU General Public License         *
+ *    along with Java Chess; if not, write to the Free Software                 *
+ *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA *
+ *                                                                              *
+ *                    *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /*
  * Created on Mar 30, 2005
@@ -25,48 +26,47 @@
 
 package chess.gui.lookAndFeel;
 
-import java.awt.*;
 import javax.swing.*;
-import javax.swing.plaf.*;
-import javax.swing.plaf.basic.*;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.basic.BasicButtonUI;
+import java.awt.*;
 
 public class ButtonUI extends BasicButtonUI {
 
-  //The singleton istance of BlueButtonUI
+	//The singleton istance of BlueButtonUI
 
-  static ButtonUI buttonUI = new ButtonUI();
+	static ButtonUI buttonUI = new ButtonUI();
 
-  //Default background and foreground
+	//Default background and foreground
 
-  Color background;
+	Color background;
 
-  Color foreground;
+	Color foreground;
 
-  //There will be only one font for this these buttons
+	//There will be only one font for this these buttons
 
-  Font font;
+	Font font;
 
-  public ButtonUI() {
-    super();
-  }
-  
-  /**
-   * Installs some default values for the given button.
-   * The button border is replaced by a metouia border.
-   *
-   * @param button The reference of the button to install its default values.
-   */
-  public void installDefaults(AbstractButton button)
-  {
-    super.installDefaults(button);
-    //button.setBorder();
-  }
- 
- //The factory method returns the singleton
+	public ButtonUI() {
+		super();
+	}
 
- public static ComponentUI createUI(JComponent c) {
-      return buttonUI;
-  }
+	public static ComponentUI createUI(JComponent c) {
+		return buttonUI;
+	}
+
+	//The factory method returns the singleton
+
+	/**
+	 * Installs some default values for the given button.
+	 * The button border is replaced by a metouia border.
+	 *
+	 * @param button The reference of the button to install its default values.
+	 */
+	public void installDefaults(AbstractButton button) {
+		super.installDefaults(button);
+		//button.setBorder();
+	}
  
 /*
   public void installUI(JComponent c) {
@@ -87,7 +87,7 @@ public class ButtonUI extends BasicButtonUI {
 
     //Note that the font compnonent is not checked therefore the value from the UIDefaults table will
 
-    //override the user’s values (This is not recommended) further not all the defaults are set
+    //override the userï¿½s values (This is not recommended) further not all the defaults are set
 
     if(c.getBackground()==null || (c.getBackground() instanceof UIResource))
 
@@ -108,27 +108,23 @@ public class ButtonUI extends BasicButtonUI {
   }
 */
 
- 
+	public void paint(Graphics g, JComponent c) {
 
-public void paint(Graphics g, JComponent c) {
+		super.paint(g, c);
+		AbstractButton button = (AbstractButton) c;
+		ButtonModel model = button.getModel();
 
-  super.paint(g, c);
-  AbstractButton button = (AbstractButton)c;
-  ButtonModel model = button.getModel();
+		// Don't paint gradients on pressed buttons!
+		if (!model.isPressed()) {
+			// If the button is on a toolbar and the mouse is over, then paint the
+			// gradients.
+			if (button.isContentAreaFilled() || button.getModel().isRollover()) {
+				//g.drawRect(0,0,button.getWidth(),button.getHeight());
+			}
 
-  // Don't paint gradients on pressed buttons!
-  if (!model.isPressed())
-  {
-    // If the button is on a toolbar and the mouse is over, then paint the
-    // gradients.
-    if (button.isContentAreaFilled() || button.getModel().isRollover())
-    {
-      //g.drawRect(0,0,button.getWidth(),button.getHeight());
-    }
-    
-  } else {
-    //g.fillRect(0,0,button.getWidth(),button.getHeight());
-  }
+		} else {
+			//g.fillRect(0,0,button.getWidth(),button.getHeight());
+		}
   
   /*
    //Once again it is safe to cast as an AbstractButton because we know it is a JButton
@@ -139,7 +135,8 @@ public void paint(Graphics g, JComponent c) {
 
     ButtonModel model = b.getModel();
 
-   //Casting to a Graphics2D for convenience, this is safew because we know that the g object is really a Graphics2D object
+   //Casting to a Graphics2D for convenience, this is safew because we know that the g object is really a Graphics2D
+   object
 
     Graphics2D g2 = (Graphics2D)g;
 
@@ -173,7 +170,8 @@ public void paint(Graphics g, JComponent c) {
 
  
 
-    //I have opted to set the base font size on the size of the button this will cause the font size to skrink or grow with respect to the button size
+    //I have opted to set the base font size on the size of the button this will cause the font size to skrink or
+    grow with respect to the button size
 
     int fontSize = (int)c.getHeight()/3;
 
@@ -201,7 +199,8 @@ public void paint(Graphics g, JComponent c) {
 
  
 
-    //Starting with a BufferedImage because the graphics object from a BufferedImage respects composite overlay directives
+    //Starting with a BufferedImage because the graphics object from a BufferedImage respects composite overlay
+    directives
 
     //NOTE the Graphics object passed in to this method does not respect these directives
 
@@ -227,7 +226,8 @@ public void paint(Graphics g, JComponent c) {
 
     Color gr = Color.WHITE;
 
-    //if button is pressed change the background to dark and switch the border colors (this makes it appear that the button is pressed in)
+    //if button is pressed change the background to dark and switch the border colors (this makes it appear that the
+    button is pressed in)
 
     if (model.isArmed() && model.isPressed()) {
 
@@ -333,6 +333,6 @@ public void paint(Graphics g, JComponent c) {
       b.getIcon().paintIcon(c,g,(int)iconRect.getX(),(int)iconRect.getY());
     
     */
-  }
-  
+	}
+
 }
